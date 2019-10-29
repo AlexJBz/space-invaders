@@ -26,7 +26,7 @@ class Canvas {
 }
 
 class Graphic {
-    constructor(x, y, width, height, colour = '#000', fill = false, outline = false, outlineThickness = 1, outlineColour = '#000') {
+    constructor(x, y, width, height) {
         this.position = {
             x: x,
             y: y,
@@ -37,11 +37,6 @@ class Graphic {
         }
         this.width = width;
         this.height = height;
-        this.colour = colour;
-        this.fill = fill;
-        this.outline = outline;
-        this.outlineThickness = outlineThickness;
-        this.outlineColour = outlineColour;
     }
 
     draw () {
@@ -51,7 +46,12 @@ class Graphic {
 
 class Rectangle extends Graphic {
     constructor(x, y, width, height, colour, fill, outline, outlineThickness, outlineColour) {
-        super(x, y, width, height, colour, fill, outline, outlineThickness, outlineColour);
+        super(x, y, width, height);
+        this.colour = colour;
+        this.fill = fill;
+        this.outline = outline;
+        this.outlineThickness = outlineThickness;
+        this.outlineColour = outlineColour;
     }
 
     draw (context) {
