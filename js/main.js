@@ -6,5 +6,3 @@ let playerTest = new Sprite(50, 0, 52, 36, '../img/player.png');
 
 canvas.addChild(enemyTest);
 canvas.addChild(playerTest);
-canvas.addChild(rectTest);
-

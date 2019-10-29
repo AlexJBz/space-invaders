@@ -40,7 +40,7 @@ class Graphic {
     }
 
     draw () {
-        console.log('[FRAMEWORK ERROR]: SET A DRAW FUNCTION FOR GRAPHIC');
+        console.log('[FRAMEWORK ERROR]: SET A DRAW FUNCTION FOR ' + this);
     }
 }
 
