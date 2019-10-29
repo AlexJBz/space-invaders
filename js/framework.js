@@ -6,12 +6,15 @@ class Canvas {
         this.view.width = width;
         this.view.height = height;
         this.graphics = [];
+        this.context.imageSmoothingEnabled = false;
         this.renderer = setInterval(()=> {
             this.render();
         }, 1000 / 30);
     }
 
     render() {  
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        this.context.beginPath();
         this.graphics.forEach(graphic => {
             graphic.draw(this.context);
         });
