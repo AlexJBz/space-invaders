@@ -1,7 +1,7 @@
 canvas = new Canvas(800, 500);
 document.body.appendChild(canvas.view);
 
-let rectangle = new Rectangle(20, 20, 100, 150);
+let rectangle = new Rectangle(20, 20, 100, 150, '#0F0');
 let rectangle2 = new Rectangle(50, 50, 100, 100);
 
 canvas.addChild(rectangle);

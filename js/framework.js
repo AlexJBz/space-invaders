@@ -23,7 +23,7 @@ class Canvas {
 }
 
 class Graphic {
-    constructor(x, y, width, height) {
+    constructor(x, y, width, height, colour = '#000', fill = false, outline = false, outlineThickness = 1, outlineColour = '#000') {
         this.position = {
             x: x,
             y: y,
@@ -34,6 +34,11 @@ class Graphic {
         }
         this.width = width;
         this.height = height;
+        this.colour = colour;
+        this.fill = fill;
+        this.outline = outline;
+        this.outlineThickness = outlineThickness;
+        this.outlineColour = outlineColour;
     }
 
     draw () {
@@ -42,13 +47,25 @@ class Graphic {
 }
 
 class Rectangle extends Graphic {
-    constructor(x, y, width, height) {
-        super(x, y, width, height);
+    constructor(x, y, width, height, colour, fill, outline, outlineThickness, outlineColour) {
+        super(x, y, width, height, colour, fill, outline, outlineThickness, outlineColour);
     }
 
     draw (context) {
+        context.lineWidth = 1;
         context.beginPath();
-        context.rect(this.position.x, this.position.y, this.width, this.height);
+        context.strokeStyle = this.colour;
+        if (this.fill) {
+            context.fillStyle = this.colour;
+            context.fillRect(this.position.x, this.position.y, this.width, this.height);
+        } else {
+            context.rect(this.position.x, this.position.y, this.width, this.height);
+        }
+        if (this.outline) {
+            context.strokeStyle = this.outlineColour;
+            context.lineWidth = this.outlineThickness;
+            context.strokeRect(this.position.x, this.position.y, this.width, this.height);
+        }
         context.stroke();
     }
 }
