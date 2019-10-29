@@ -20,8 +20,28 @@ class Canvas {
         });
     }
 
-    addChild(child) {
-        this.graphics.push(child);
+    addGraphic(child) {
+        let found = false;
+        this.graphics.forEach(graphic => {
+            if (graphic == child) {
+                console.log('Tried to duplicate')
+                found = true;
+                return;
+            }
+        });
+        if (!found) {
+            this.graphics.push(child);
+        }
+    }
+
+    removeGraphic(child) {
+        for (let i = 0; i < this.graphics.length; i++) {
+            let graphic = this.graphics[i];
+            if (graphic == child) {
+                this.graphics.splice(i, 1);
+                return;
+            }
+        }
     }
 }
 

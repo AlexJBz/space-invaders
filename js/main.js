@@ -4,5 +4,5 @@ document.body.appendChild(canvas.view);
 let enemyTest = new Sprite(0, 0, 40, 36, '../img/enemy.png');
 let playerTest = new Sprite(50, 0, 52, 36, '../img/player.png');
 
-canvas.addChild(enemyTest);
-canvas.addChild(playerTest);
+canvas.addGraphic(enemyTest);
+canvas.addGraphic(playerTest);
