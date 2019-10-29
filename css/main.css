@@ -23,8 +23,6 @@ body {
 canvas {
     position: absolute;
     background-color:purple;
-    width:800px;
-    height:500px;
     left:50%;
     margin-left:-400px;
     margin-top:30px;
