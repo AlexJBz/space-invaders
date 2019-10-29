@@ -70,3 +70,15 @@ class Rectangle extends Graphic {
     }
 }
 
+class Sprite extends Graphic {
+    constructor(x, y, width, height, imageUrl) {
+        super(x, y, width, height);
+        this.image = new Image(width, height);
+        this.image.src = imageUrl;
+    }
+
+    draw(context) {
+        context.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+    }
+}
+
