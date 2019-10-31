@@ -82,6 +82,11 @@ let game = {
             this.alive = true;
             this.alien = new Sprite(0, 0, 40, 36, '../img/enemy.png');
         }
+
+        die() {
+            this.alive = false;
+            this.alien.visible = false;
+        }
     },
     playerClass: class Player {
         constructor() {
@@ -121,7 +126,6 @@ let game = {
         }
 
         shoot () {
-            console.log('Shoot god dammit!');
             this.bullets.push(new Rectangle(game.player.ship.position.x + (game.player.ship.width / 2) - 1, game.player.ship.position.y - 5, 2, 10, '#4caf50', true));
             game.canvas.addGraphic(this.bullets[this.bullets.length - 1]);
         }
@@ -143,9 +147,25 @@ let game = {
         }
 
         moveBullets() {
-            this.bullets.forEach(bullet => {
-                bullet.position.y -= 2;
-            });
+            for (let i = 0; i < this.bullets.length; i++) {
+                let bullet = this.bullets[i];
+                bullet.position.y -= 6;
+                let hit = false;
+                game.enemyController.enemies.forEach(enemy => {
+                    if (enemy.alive) {
+                        if (bullet.position.x >= enemy.alien.position.x && bullet.position.x <= enemy.alien.position.x + enemy.alien.width) {
+                            if (bullet.position.y >= enemy.alien.position.y && bullet.position.y <= enemy.alien.position.y + enemy.alien.height) {
+                                enemy.die();
+                                hit = true;
+                            }
+                        }
+                    }
+                });
+                if (bullet.position.y <= -6 || hit) {
+                    this.bullets.splice(i, 1);
+                    game.canvas.removeGraphic(bullet);
+                }
+            }
         }
     },
     player: null,
