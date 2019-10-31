@@ -19,20 +19,60 @@ let game = {
         constructor(enemyCount, rows) {
             this.enemyCount = enemyCount;
             this.rows = rows;
+            this.rowPosition = 0;
+            this.moveLeft = true;
             this.enemies = [];
             this.init();
+            this.moveInterval = setInterval(()=> {
+                this.moveEnemies();
+            }, 1000 / 30);
+        }
+
+        moveEnemies() {
+            if (this.rowPosition) {
+                if (this.moveLeft) {
+                    this.rowPosition += 2;
+                    if (this.rowPosition <= 780 - this.rowWidth) {
+                        this.moveAliens(2);
+                    } else {
+                        this.moveLeft = false;
+                        this.downShift();
+                    }
+                } else {
+                    this.rowPosition -= 2;
+                    if (this.rowPosition >= 20) {
+                        this.moveAliens(-2);
+                    } else {
+                        this.moveLeft = true;
+                        this.downShift();
+                    }
+                }
+            }
+        }
+
+        moveAliens(amount) {
+            this.enemies.forEach(enemy => {
+                let alien = enemy.alien;
+                alien.position.x += amount;
+            });
+        }
+
+        downShift() {
+            this.enemies.forEach(enemy => {
+                let alien = enemy.alien;
+                alien.position.y += alien.height;
+            });
         }
 
         init() {
             let enemiesPerRow = this.enemyCount / this.rows;
             this.rowWidth = ((enemiesPerRow * 40) + (10 * enemiesPerRow));
-            let rowOffset = (game.canvas.view.width / 2) - this.rowWidth / 2;
+            this.rowPosition = (game.canvas.view.width / 2) - this.rowWidth / 2;
             for (let i = 0; i < this.rows; i++) {
                 for (let j = 0; j < enemiesPerRow; j++) {
                     let newEnemy = new game.enemyClass();
                     this.enemies.push(newEnemy);
-                    let rowpos = rowOffset;
-                    newEnemy.alien.position.set(rowpos + (j * (newEnemy.alien.width + 10)), 25 + i * newEnemy.alien.height);
+                    newEnemy.alien.position.set(this.rowPosition + (j * (newEnemy.alien.width + 10)), 25 + i * (newEnemy.alien.height + 5));
                     game.canvas.addGraphic(newEnemy.alien);
                 }
             }
