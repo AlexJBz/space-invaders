@@ -11,11 +11,36 @@
 let game = {
     settings: {
         moveSpeed: 5,
+        enemyCount: 35,
+        rowCount: 5   
     },
     canvas: null,
+    enemyControllerClass: class EnemyController {
+        constructor(enemyCount, rows) {
+            this.enemyCount = enemyCount;
+            this.rows = rows;
+            this.enemies = [];
+            this.init();
+        }
+
+        init() {
+            let enemiesPerRow = this.enemyCount / this.rows;
+            this.rowWidth = ((enemiesPerRow * 40) + (10 * enemiesPerRow));
+            let rowOffset = (game.canvas.view.width / 2) - this.rowWidth / 2;
+            for (let i = 0; i < this.rows; i++) {
+                for (let j = 0; j < enemiesPerRow; j++) {
+                    let newEnemy = new game.enemyClass();
+                    this.enemies.push(newEnemy);
+                    let rowpos = rowOffset;
+                    newEnemy.alien.position.set(rowpos + (j * (newEnemy.alien.width + 10)), 25 + i * newEnemy.alien.height);
+                    game.canvas.addGraphic(newEnemy.alien);
+                }
+            }
+        }
+    },
     enemyClass: class Enemy {
         constructor() {
-            this.health = 100;
+            this.alive = true;
             this.alien = new Sprite(0, 0, 40, 36, '../img/enemy.png');
         }
     },
@@ -73,10 +98,12 @@ let game = {
         }
     },
     player: null,
+    enemyController: null,
     init () {
         this.canvas = new Canvas(800, 500);
         document.body.appendChild(this.canvas.view);
         this.player = new this.playerClass();
+        this.enemyController = new this.enemyControllerClass(this.settings.enemyCount, this.settings.rowCount);
     }
 }
 
