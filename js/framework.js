@@ -107,4 +107,3 @@ class Sprite extends Graphic {
         context.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 }
-

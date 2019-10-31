@@ -19,7 +19,6 @@ let game = {
         constructor(enemyCount, rows) {
             this.enemyCount = enemyCount;
             this.rows = rows;
-            this.rowPosition = 0;
             this.moveLeft = true;
             this.enemies = [];
             this.init();
@@ -93,6 +92,10 @@ let game = {
             this.controlListener();
             this.moveKey = 0;
             this.moveInterval = null;
+            this.bullets = [];
+            this.bulletInterval = setInterval(()=> {
+                this.moveBullets();
+            }, 1000 / 30);
         }
 
         controlListener() {
@@ -119,6 +122,8 @@ let game = {
 
         shoot () {
             console.log('Shoot god dammit!');
+            this.bullets.push(new Rectangle(game.player.ship.position.x + (game.player.ship.width / 2) - 1, game.player.ship.position.y - 5, 2, 10, '#4caf50', true));
+            game.canvas.addGraphic(this.bullets[this.bullets.length - 1]);
         }
 
         move(keyCode) {
@@ -135,6 +140,12 @@ let game = {
                     this.ship.position.x += game.settings.moveSpeed;
                 }
             }
+        }
+
+        moveBullets() {
+            this.bullets.forEach(bullet => {
+                bullet.position.y -= 2;
+            });
         }
     },
     player: null,
