@@ -1,18 +1,9 @@
-
-
-// let enemyTest = new Sprite(0, 0, 40, 36, '../img/enemy.png');
-// let playerTest = new Sprite(50, 0, 52, 36, '../img/player.png');
-
-// canvas.addGraphic(enemyTest);
-// canvas.addGraphic(playerTest);
-
-// playerTest.position.set(250, 250);
-
 let game = {
     settings: {
         moveSpeed: 5,
         enemyCount: 35,
-        rowCount: 5   
+        rowCount: 5,
+        enemySpeed: 18
     },
     canvas: null,
     enemyControllerClass: class EnemyController {
@@ -30,17 +21,17 @@ let game = {
         moveEnemies() {
             if (this.rowPosition) {
                 if (this.moveLeft) {
-                    this.rowPosition += 2;
+                    this.rowPosition += game.settings.enemySpeed;
                     if (this.rowPosition <= 780 - this.rowWidth) {
-                        this.moveAliens(2);
+                        this.moveAliens(game.settings.enemySpeed);
                     } else {
                         this.moveLeft = false;
                         this.downShift();
                     }
                 } else {
-                    this.rowPosition -= 2;
+                    this.rowPosition -= game.settings.enemySpeed;
                     if (this.rowPosition >= 20) {
-                        this.moveAliens(-2);
+                        this.moveAliens(-game.settings.enemySpeed);
                     } else {
                         this.moveLeft = true;
                         this.downShift();
