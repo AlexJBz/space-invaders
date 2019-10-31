@@ -13,6 +13,12 @@ let game = {
         moveSpeed: 5,
     },
     canvas: null,
+    enemyClass: class Enemy {
+        constructor() {
+            this.health = 100;
+            this.alien = new Sprite(0, 0, 40, 36, '../img/enemy.png');
+        }
+    },
     playerClass: class Player {
         constructor() {
             this.health = 100;
@@ -20,13 +26,13 @@ let game = {
             game.canvas.addGraphic(this.ship);
             this.ship.position.set((game.canvas.view.width / 2 - this.ship.width / 2), (game.canvas.view.height - this.ship.height - 10));
             this.controlListener();
-            this.moveKey = null;
+            this.moveKey = 0;
             this.moveInterval = null;
         }
 
         controlListener() {
-            // 97 A, 100 D, 32 SPACE
             window.addEventListener('keypress', key => {
+                // 97 = A, 100 = D
                 if (key.keyCode == 97 || key.keyCode == 100) {
                     if (!this.moveInterval) {
                         this.moveKey = key.keyCode;
@@ -35,9 +41,11 @@ let game = {
                 }
             });
             window.addEventListener('keyup', key => {
+                // 32 = Space
                 if (key.keyCode + 32 == this.moveKey) {
                     clearInterval(this.moveInterval);
                     this.moveInterval = null;
+                    this.moveKey = 0;
                 } else if (key.keyCode == 32) {
                     this.shoot();
                 }

@@ -16,7 +16,9 @@ class Canvas {
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         this.context.beginPath();
         this.graphics.forEach(graphic => {
-            graphic.draw(this.context);
+            if (graphic.visible) {
+                graphic.draw(this.context);
+            }
         });
     }
 
@@ -55,6 +57,7 @@ class Graphic {
                 this.y = y;
             }
         }
+        this.visible = true;
         this.width = width;
         this.height = height;
     }
